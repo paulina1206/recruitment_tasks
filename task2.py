@@ -17,3 +17,33 @@ Example:
 }
 """
 
+import os
+
+
+def scan_directory(path: str) -> dict:
+    """
+    Recursive scan of directory to create grouped by first 3-letter dictionary from found files
+    :param path: str, directory path
+    :return: dictionary with 3-letter key sort the filenames - that group sorted by the actual size
+    of the files in reverse order
+    """
+    result = {}
+
+    for dirpath, dirnames, filenames in os.walk(path):
+        # grouping files by first three letters
+        for file in filenames:
+            try:
+                full_file_path = os.path.join(dirpath, file)
+                file_size = os.path.getsize(full_file_path)
+                result[file[:3]].append((file_size, file))
+            except KeyError:
+                result[file[:3]] = [(file_size, file)]
+    # sorting by the size of the files in reverse order
+    for key, value in result.items():
+        result[key] = sorted(value, key=lambda x: x[0], reverse=True)
+    return result
+
+
+if __name__ == '__main__':
+    dir_path = '/usr/share/doc'
+    print(scan_directory(dir_path))

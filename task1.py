@@ -10,3 +10,18 @@ a = ['century', 'customer', 'democratic', 'Congress', 'customer', 'evening',
      'often', 'outside', 'reveal', 'weight', 'western', 'century']
 b = ['weapon', 'western', 'traditional', 'guess', 'customer', 'exist',
      'democratic', 'Congress', 'evening', 'finish', 'western', 'executive']
+
+
+def new_list(list_a: list, list_b: list) -> list:
+    """
+    take in two list and return distinct sorted by number of characters one
+    :param list_a: list of words
+    :param list_b: list of words
+    :return: distinct list with words sorted by number of characters
+    """
+    c = [word for word in list_a if word in list_b]
+    return sorted(c, key=len)
+
+
+if __name__ == '__main__':
+    print(new_list(a, b))
